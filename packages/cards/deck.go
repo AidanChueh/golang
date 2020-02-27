@@ -1,4 +1,4 @@
-package main
+package cards
 
 import (
 	"fmt"
@@ -9,15 +9,14 @@ import (
 	"time"
 )
 
-// Create a new type of 'deck'
-// which is a slice of string
-type deck []string
+// Deck represents a deck of cards
+type Deck []string
 
 // Implement a function to return size of deck
 
-// Create and return a list of playing cards. Essentially an array of strings
-func newDeck() deck {
-	cards := deck{}
+// NewDeck creates a new deck of cards
+func NewDeck() Deck {
+	cards := Deck{}
 
 	cardSuits := []string{"Spades", "Diamonds", "Hearts", "Clubs"}
 	cardValues := []string{"Ace", "Two", "Three", "Four"}
@@ -31,7 +30,7 @@ func newDeck() deck {
 	return cards
 }
 
-func newDeckFromFile(filename string) deck {
+func newDeckFromFile(filename string) Deck {
 	bs, err := ioutil.ReadFile(filename)
 	if err != nil {
 		// Option #1 - log the error and return a call to newDeck()
@@ -40,28 +39,30 @@ func newDeckFromFile(filename string) deck {
 		os.Exit(1)
 	}
 	s := strings.Split(string(bs), ",")
-	return deck(s)
+	return Deck(s)
 }
 
-func (d deck) print() {
+// Print prints the deck
+func (d Deck) Print() {
 	for i, card := range d {
 		fmt.Println(i, card)
 	}
 }
 
-func (d deck) deal(handSize int) (deck, deck) {
+func (d Deck) deal(handSize int) (Deck, Deck) {
 	return d[:handSize], d[handSize:]
 }
 
-func (d deck) toString() string {
+func (d Deck) toString() string {
 	return strings.Join([]string(d), ",")
 }
 
-func (d deck) saveToFile(filename string) error {
+func (d Deck) saveToFile(filename string) error {
 	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
 }
 
-func (d deck) shuffle() {
+// Shuffle shuffles the deck
+func (d Deck) Shuffle() {
 	source := rand.NewSource(time.Now().UnixNano())
 	r := rand.New(source)
 
