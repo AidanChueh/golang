@@ -49,7 +49,8 @@ func (d Deck) Print() {
 	}
 }
 
-func (d Deck) deal(handSize int) (Deck, Deck) {
+// Deal deals the deck
+func (d Deck) Deal(handSize int) (Deck, Deck) {
 	return d[:handSize], d[handSize:]
 }
 
