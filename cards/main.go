@@ -8,12 +8,12 @@ import (
 )
 
 func main() {
-	c := deck.NewDeck()
+	c := deck.New()
 	c.Print()
 	c.Shuffle()
 	fmt.Println(c.Deal(5))
-	c1 := deck.NewDeck()
-	c2 := deck.NewDeck()
+	c1 := deck.New()
+	c2 := deck.New()
 	d := dealer.NewDealer(c1, c2)
 	d.Print()
 	fmt.Println(d.Combine())

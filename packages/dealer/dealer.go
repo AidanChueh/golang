@@ -2,8 +2,6 @@ package dealer
 
 import (
 	"fmt"
-	"math/rand"
-	"time"
 
 	"github.com/AidanChueh/golang/packages/deck"
 )
@@ -28,17 +26,13 @@ func (d Dealer) Print() {
 	d.deck2.Print()
 }
 
-// Combine combines the decks
+// Combine returns the combined deck
 // Append function for arrays/slices: http://mussatto.github.io/golang/append/arrays/slices/2016/11/09/golang-append-two-arrays.html
 func (d Dealer) Combine() deck.Deck {
 	return append(d.deck1, d.deck2...)
 }
 
-// Split splits the deck
-func (d Dealer) Split(deck deck.Deck) (deck.Deck, deck.Deck) {
-	source := rand.NewSource(time.Now().UnixNano())
-	r := rand.New(source)
-	splitPosition := r.Intn(len(deck) - 1)
-	fmt.Println(splitPosition)
-	return deck[:splitPosition], deck[splitPosition:]
+// Decks returns the decks
+func (d Dealer) Decks() (deck.Deck, deck.Deck) {
+	return d.deck1, d.deck2
 }

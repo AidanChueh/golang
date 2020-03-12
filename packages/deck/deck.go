@@ -14,8 +14,8 @@ type Deck []string
 
 // Implement a function to return size of deck
 
-// NewDeck creates a new deck of cards
-func NewDeck() Deck {
+// New creates and returns a new deck of cards
+func New() Deck {
 	cards := Deck{}
 
 	cardSuits := []string{"Spades", "Diamonds", "Hearts", "Clubs"}
@@ -30,10 +30,24 @@ func NewDeck() Deck {
 	return cards
 }
 
-func newDeckFromFile(filename string) Deck {
+// Random creates and returns a random deck
+func Random() Deck {
+	cards := Deck{}
+
+	source := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(source)
+	numCards := r.Intn(10)
+
+	for i := 0; i <= numCards; i++ {
+		cards = append(cards, "Ace of Spades")
+	}
+	return cards
+}
+
+func NewFromFile(filename string) Deck {
 	bs, err := ioutil.ReadFile(filename)
 	if err != nil {
-		// Option #1 - log the error and return a call to newDeck()
+		// Option #1 - log the error and return a call to New()
 		// Option #2 - log the error and entirely quite the program
 		fmt.Println("Error:", err)
 		os.Exit(1)

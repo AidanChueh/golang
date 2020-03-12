@@ -12,8 +12,8 @@ import (
 // Don't write the code and assume it works
 // Test it to make sure it works
 func TestCombine(t *testing.T) {
-	c1 := randomDeck()
-	c2 := deck.NewDeck()
+	c1 := Random()
+	c2 := deck.New()
 	d := NewDealer(c1, c2)
 	d.Print()
 	fmt.Println("----")
@@ -25,8 +25,8 @@ func TestCombine(t *testing.T) {
 }
 
 // func TestCombineAndSplit(t *testing.T) {
-// 	c1 := randomDeck()
-// 	c2 := deck.NewDeck()
+// 	c1 := Random()
+// 	c2 := deck.New()
 // 	d := NewDealer(c1, c2)
 // 	fmt.Println("initial:", c1)
 
@@ -55,23 +55,11 @@ func equals(d1 deck.Deck, d2 deck.Deck) bool {
 	return true
 }
 
-func randomDeck() deck.Deck {
-	cards := deck.Deck{}
-
-	source := rand.NewSource(time.Now().UnixNano())
-	r := rand.New(source)
-	numCards := r.Intn(10)
-	fmt.Println("random deck:", numCards)
-	for i := 0; i <= numCards; i++ {
-		cards = append(cards, "Ace of Spades")
-	}
-	return cards
-}
 
 // NewDealer should have two decks
 // func TestNewDealer(t *testing.T) {
-// 	c1 := deck.NewDeck()
-// 	c2 := deck.NewDeck()
+// 	c1 := deck.New()
+// 	c2 := deck.New()
 // 	d := NewDealer(c1, c2)
 
 // 	if len(d.deck1) != 16 {
@@ -85,8 +73,8 @@ func randomDeck() deck.Deck {
 
 // Combine should combine two decks into one
 // func TestCombine(t *testing.T){
-// 	c1 := deck.NewDeck()
-// 	c2 := deck.NewDeck()
+// 	c1 := deck.New()
+// 	c2 := deck.New()
 // 	d := NewDealer(c1, c2)
 // 	c = d.Combine()
 
