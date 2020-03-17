@@ -17,5 +17,5 @@ func main() {
 	d := dealer.NewDealer(c1, c2)
 	d.Print()
 	fmt.Println(d.Combine())
-	fmt.Println(d.Split(d))
+	fmt.Println(d.Decks())
 }

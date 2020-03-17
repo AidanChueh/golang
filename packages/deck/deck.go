@@ -12,18 +12,25 @@ import (
 // Deck represents a deck of cards
 type Deck []string
 
+// Declaring the variables
+var cardSuits []string
+var cardValues []string
+
+// Initializing the variables
+func init() {
+	cardSuits = []string{"Spades", "Diamonds", "Hearts", "Clubs"}
+	cardValues = []string{"Ace", "Two", "Three", "Four", "Five"}
+}
+
 // Implement a function to return size of deck
 
 // New creates and returns a new deck of cards
 func New() Deck {
 	cards := Deck{}
 
-	cardSuits := []string{"Spades", "Diamonds", "Hearts", "Clubs"}
-	cardValues := []string{"Ace", "Two", "Three", "Four"}
-
 	for _, suit := range cardSuits {
 		for _, value := range cardValues {
-			cards = append(cards, value+" of "+suit)
+			cards = append(cards, cardName(suit, value))
 		}
 	}
 
@@ -31,20 +38,26 @@ func New() Deck {
 }
 
 // Random creates and returns a random deck
+// avoid hard coding, such as writing "Ace of Spades"
+// if it is an early exit condition, do it as soon as possible
 func Random() Deck {
 	cards := Deck{}
+
+	if len(cardSuits) == 0 || len(cardValues) == 0 {
+		return cards
+	}
 
 	source := rand.NewSource(time.Now().UnixNano())
 	r := rand.New(source)
 	numCards := r.Intn(10)
 
 	for i := 0; i <= numCards; i++ {
-		cards = append(cards, "Ace of Spades")
+		cards = append(cards, cardName(cardSuits[0], cardValues[0]))
 	}
 	return cards
 }
 
-func NewFromFile(filename string) Deck {
+func newFromFile(filename string) Deck {
 	bs, err := ioutil.ReadFile(filename)
 	if err != nil {
 		// Option #1 - log the error and return a call to New()
@@ -54,6 +67,10 @@ func NewFromFile(filename string) Deck {
 	}
 	s := strings.Split(string(bs), ",")
 	return Deck(s)
+}
+
+func cardName(suit string, value string) string {
+	return value + " of " + suit
 }
 
 // Print prints the deck
@@ -86,4 +103,14 @@ func (d Deck) Shuffle() {
 
 		d[i], d[newPosition] = d[newPosition], d[i]
 	}
+}
+
+func (d Deck) contains(card string) bool {
+	for _, c := range d {
+		if c == card {
+			return true
+		}
+	}
+
+	return false
 }

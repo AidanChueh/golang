@@ -5,19 +5,25 @@ import (
 	"testing"
 )
 
+// %v means print anything no matter the type
+// coding for test stability
+
+// writing code for test stability
+// write test accordingly
 func TestNew(t *testing.T) {
 	d := New()
 
-	if len(d) != 16 {
-		t.Errorf("Expected deck length of 16, but got %v", len(d))
+	if len(d) != len(cardSuits)*len(cardValues) {
+		t.Errorf("Expected deck length of %v, but got %v", len(cardSuits)*len(cardValues), len(d))
 	}
 
-	if d[0] != "Ace of Spades" {
-		t.Errorf("Expected first card of Ace of Spades, but got %v", d[0])
-	}
-
-	if d[len(d)-1] != "Four of Clubs" {
-		t.Errorf("Expected last card of Four of Clubs, but got %v", d[len(d)-1])
+	for _, suit := range cardSuits {
+		for _, value := range cardValues {
+			card := cardName(suit, value)
+			if !d.contains(card) {
+				t.Errorf("Expected %v, but not found", card)
+			}
+		}
 	}
 }
 
@@ -27,7 +33,7 @@ func TestSaveToDeckAndNewFromFile(t *testing.T) {
 	deck := New()
 	deck.saveToFile("_decktesting")
 
-	loadedDeck := NewFromFile("_decktesting")
+	loadedDeck := newFromFile("_decktesting")
 
 	if len(loadedDeck) != 160 {
 		t.Errorf("Expected 16 cards in deck, got %v", len(loadedDeck))
