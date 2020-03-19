@@ -36,3 +36,8 @@ func (d Dealer) Combine() deck.Deck {
 func (d Dealer) Decks() (deck.Deck, deck.Deck) {
 	return d.deck1, d.deck2
 }
+
+// Equals determines if the decks are equal
+func (d Dealer) Equals() bool {
+	return d.deck1.Equals(d.deck2)
+}
